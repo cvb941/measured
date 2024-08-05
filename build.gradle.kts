@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
@@ -20,8 +21,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
-    id ("maven-publish"     )
-    signing
+    id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
 repositories {
@@ -150,7 +150,7 @@ kotlin {
 }
 
 fun DokkaBaseConfiguration.configDokka() {
-    homepageLink                          = "https://github.com/nacular/measured"
+    homepageLink                          = "https://github.com/cvb941/measured"
     customAssets                          = listOf(file("logo-icon.svg"))
     footerMessage                         = "(c) 2024 Nacular"
     separateInheritedMembers              = true
@@ -191,7 +191,7 @@ tasks.dokkaHtml {
 
         sourceLink {
             localDirectory.set(rootProject.projectDir)
-            remoteUrl.set(URL("https://github.com/nacular/measured/tree/master"))
+            remoteUrl.set(URL("https://github.com/cvb941/measured/tree/master"))
             remoteLineSuffix.set("#L")
         }
 
@@ -201,60 +201,36 @@ tasks.dokkaHtml {
     }
 }
 
-publishing {
-    publications.withType<MavenPublication>().apply {
-        val jvm by getting {
-            artifact(dokkaJar)
-        }
-        all {
-            pom {
-                name.set       ("Measured"                             )
-                description.set("Intuitive, type-safe units for Kotlin")
-                url.set        ("https://github.com/nacular/measured"  )
-                licenses {
-                    license {
-                        name.set("MIT"                                )
-                        url.set ("https://opensource.org/licenses/MIT")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set  ("pusolito"     )
-                        name.set("Nicholas Eddy")
-                    }
-                }
-                scm {
-                    url.set                ("https://github.com/nacular/measured.git"      )
-                    connection.set         ("scm:git:git://github.com/nacular/measured.git")
-                    developerConnection.set("scm:git:git://github.com/nacular/measured.git")
-                }
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
+
+    signAllPublications()
+
+    pom {
+        name.set("Measured")
+        description.set("Intuitive, type-safe units for Kotlin")
+        inceptionYear.set("2024")
+        url.set("https://github.com/cvb941/measured")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
+                distribution.set("repo")
             }
         }
-    }
-
-    repositories {
-        maven {
-            val releaseBuild = project.hasProperty("release")
-
-            url = uri(when {
-                releaseBuild -> "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-                else         -> "https://oss.sonatype.org/content/repositories/snapshots"
-            })
-
-            credentials {
-                username = findProperty("suser")?.toString()
-                password = findProperty("spwd" )?.toString()
+        developers {
+            developer {
+                id.set("cvb941")
+                name.set("Lukas Kusik")
+                url.set("https://github.com/cvb941/")
             }
         }
+        scm {
+            url.set("https://github.com/cvb941/measured")
+            connection.set("scm:git:git://github.com/cvb941/measured.git")
+            developerConnection.set("scm:git:ssh://git@github.com/cvb941/measured.git")
+        }
     }
-}
-
-signing {
-    setRequired({
-        project.hasProperty("release") && gradle.taskGraph.hasTask("publish")
-    })
-    useGpgCmd()
-    sign(publishing.publications)
 }
 
 rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {

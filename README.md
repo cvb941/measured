@@ -3,7 +3,7 @@
 
 [![Kotlin 1.9.23](https://img.shields.io/badge/Kotlin_1.9.23-blue.svg?style=for-the-badge&logo=kotlin&logoColor=white)](http://kotlinlang.org)
 [![JS, Wasm, JVM, iOS, Android, Native](https://img.shields.io/badge/JS%2C_Wasm%2C_JVM%2C_iOS%2C_Android%2C_Native-purple?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/docs/js-overview.html)
-[![License: MIT](https://img.shields.io/badge/MIT_License-green.svg?style=for-the-badge)](https://github.com/nacular/measured/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/MIT_License-green.svg?style=for-the-badge)](https://github.com/cvb941/measured/blob/master/LICENSE)
 
 Measured provides a safe and simple way to work with units of measure. It uses the compiler to ensure correctness, and provides intuitive, mathematical operations to work with any units. This means you can write more robust code that avoids implicit units. Time handling for example, is often done with implicit assumptions about milliseconds vs microseconds or seconds. Measured helps you avoid pitfalls like these.
 
@@ -162,5 +162,5 @@ dependencies {
 
 ## Contact
 
-- Please see [issues](https://github.com/nacular/measured/issues) to share bugs you find, make feature requests, or just get help with your questions.
+- Please see [issues](https://github.com/cvb941/measured/issues) to share bugs you find, make feature requests, or just get help with your questions.
 - Let us know what you think by leaving a comment or a star ⭐️.

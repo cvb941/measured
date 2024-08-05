@@ -146,12 +146,9 @@ class Measure<T: Units>(val amount: Double, val units: T): Comparable<Measure<T>
         if (other !is Measure<*>) return false
 //        if (this.amount == 0.0 && other.amount == 0.0) return true TODO: Should this be true?
 
-        val resultUnit = minOf(units, (other as Measure<T>).units)
+        if (this.units != other.units) return false
 
-        val a = this  `in` resultUnit
-        val b = other `in` resultUnit
-
-        return a == b
+        return this.amount == other.amount
     }
 
     override fun hashCode(): Int {
