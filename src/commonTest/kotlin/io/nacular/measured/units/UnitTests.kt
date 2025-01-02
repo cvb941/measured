@@ -177,8 +177,8 @@ class MeasureTests {
         val measureA = Measure(10.0, unitA)
         val measureB = Measure(10.0, unitB)
 
-        expect(Measure(110.0, unitB)) { measureA + measureB }
-        expect(Measure( 90.0, unitB)) { measureA - measureB }
+        expect(Measure(11.0, unitA)) { measureA + measureB }
+        expect(Measure( 9.0, unitA)) { measureA - measureB }
     }
 
     @Test @JsName("unaryMinusOperatorsWork")
